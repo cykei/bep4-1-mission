@@ -18,7 +18,7 @@ public class PostEventListener {
 
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
-    public void handle(MemberJoinedEvent event) {
+    public void handle(MemberModifiedEvent event) {
         postFacade.syncMember(event.getMember());
     }
 }

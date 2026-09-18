@@ -1,5 +1,6 @@
 package com.back.boundedContext.member.domain;
 
+import com.back.boundedContext.member.dto.MemberDto;
 import com.back.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,11 @@ public class Member extends SourceMember {
     }
 
     public int increaseActivityScore(int amount) {
+        if (amount == 0) return getActivityScore();
         setActivityScore(getActivityScore() + amount);
+        publishEvent(
+                new MemberModifiedEvent(new MemberDto(this))
+        );
         return getActivityScore();
     }
 }
